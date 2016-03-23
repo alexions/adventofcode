@@ -1,0 +1,11 @@
+---
+- hosts: all
+  vars_files:
+    - vars/all.yml
+  roles:
+    - common
+    - php
+    - nodejs
+    - golang
+    - erlang
+    - python

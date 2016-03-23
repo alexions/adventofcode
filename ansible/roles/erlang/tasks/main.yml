@@ -1,0 +1,11 @@
+- name: Add the Erlang solution yum repository 
+  yum: name=http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm state=present
+  become: yes
+  tags:
+    - erlang
+
+- name: Install Erlang
+  yum: name=erlang state=present
+  become: yes
+  tags:
+    - erlang

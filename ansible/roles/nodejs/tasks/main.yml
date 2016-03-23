@@ -1,0 +1,8 @@
+- name: Install NodeJS
+  yum: name={{ item }} state=installed
+  become: yes
+  with_items:
+    - nodejs
+    - npm
+  tags:
+    - nodejs

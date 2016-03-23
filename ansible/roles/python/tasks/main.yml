@@ -1,0 +1,11 @@
+- name: Install Python 3
+  yum: name=python34 state=installed
+  become: yes
+  tags:
+    - python
+
+- name: Install pip3
+  shell: curl https://bootstrap.pypa.io/get-pip.py | python3.4
+  become: yes
+  tags:
+    - python

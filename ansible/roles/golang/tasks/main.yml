@@ -1,0 +1,25 @@
+- name: Install Golang
+  yum: name=golang state=installed
+  become: yes
+  tags:
+    - golang
+
+- name: Add export PATH
+  lineinfile:
+    dest=~/.bashrc
+    line="export PATH"
+    insertafter=EOF
+    create=yes
+    mode=0600
+  tags:
+    - golang
+
+- name: Extend bin paths
+  lineinfile:
+    dest=~/.bashrc
+    line=PATH=$PATH:/usr/local/go/bin
+    insertbefore="^export PATH$"
+    create=yes
+    mode=0600
+  tags:
+    - golang

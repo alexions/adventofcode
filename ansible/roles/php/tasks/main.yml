@@ -1,0 +1,17 @@
+- name: Add the Webtatic EL yum repository 
+  yum: name={{ item }} state=present
+  become: yes
+  with_items:
+    - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    - https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+  tags:
+    - php
+
+- name: Install PHP 7.0s mod_php SAPI (along with an opcode cache)
+  yum: name={{ item }} state=present
+  become: yes
+  with_items:
+    - php70w
+    - php70w-opcache
+  tags:
+    - php
