@@ -34,5 +34,8 @@ run-erl:
 run-go:
 	go run golang/main.go $(INPUT_FILE)
 
+run-node:
+	coffee nodejs/index.coffee $(INPUT_FILE)
+
 %:
 	@:
