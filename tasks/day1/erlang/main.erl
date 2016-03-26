@@ -3,16 +3,14 @@
 
 start([InputFile]) ->
     {ok, Data} = file:read_file(InputFile),
-    {Level, Basemant, _} = lists:foldl(fun(Sym, {Level, Basemant, Index}) ->
-            NewLevel = case Sym of
-                $( -> Level + 1;
-                $) -> Level - 1;
-                _ -> Level
-            end,
-            NewBasemant = case NewLevel of
-                -1 when Basemant == 0 -> Index;
-                _ -> Basemant
-            end,
-            {NewLevel, NewBasemant, Index + 1}
-        end, {0, 0, 1}, binary_to_list(Data)),
-    io:format("Level: ~w~nBasemant: ~w~n", [Level, Basemant]).
+    {Level, Basemant, _} = lists:foldl(fun level/2, {0, 0, 1}, binary_to_list(Data)),
+    io:format("Level: ~w~nBasemant: ~w~n", [Level, Basemant]),
+    halt().
+
+level(Char, {-1, 0, Index}) ->
+    level(Char, {-1, Index - 1, Index});
+level($(, {Level, Basemant, Index}) -> 
+    {Level + 1, Basemant, Index + 1};
+level($), {Level, Basemant, Index}) -> 
+    {Level - 1, Basemant, Index + 1};
+level(_, Acc) -> Acc.
