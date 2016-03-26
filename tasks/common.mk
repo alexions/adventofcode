@@ -14,7 +14,8 @@ clean:
 
 check-input:
 	@if [ ! -f input.txt ]; then\
-		$(MAKE) input;\
+		echo >&2 "Input file was no found. Create input.txt first.";\
+		false;\
 	fi
 
 input:
