@@ -8,6 +8,10 @@ all:
 	@echo "    ENV = erl | go | node | php | python"
 	@echo "'make run all' - Run all envs"
 
+clean:
+	find . -type f -name "*.dump" -exec rm -f {} \;
+	find . -type f -name "*.beam" -exec rm -f {} \;
+
 check-input:
 	@if [ ! -f input.txt ]; then\
 		$(MAKE) input;\
@@ -25,6 +29,9 @@ run-php:
 run-erl:
 	erlc -o erlang erlang/*.erl
 	erl -pa erlang -noshell -s main start $(INPUT_FILE) -s init stop
+
+run-go:
+	go run golang/main.go $(INPUT_FILE)
 
 %:
 	@:
