@@ -6,3 +6,7 @@
     - npm
   tags:
     - nodejs
+
+- name: Install coffee-script
+  npm: name=coffee-script global=yes
+  become: yes
