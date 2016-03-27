@@ -37,5 +37,8 @@ run-go:
 run-node:
 	coffee nodejs/index.coffee $(INPUT_FILE)
 
+run-python:
+	python3 python/main.py $(INPUT_FILE)
+
 %:
 	@:
