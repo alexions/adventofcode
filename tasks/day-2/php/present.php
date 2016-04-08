@@ -1,8 +1,5 @@
 <?php
 
-/**
-* 
-*/
 class Present
 {
     protected $length = 0;
@@ -25,5 +22,16 @@ class Present
         $min_side = min($side_a, $side_b, $side_c);
 
         return 2 * $side_a + 2 * $side_b + 2 * $side_c + $min_side;
+    }
+
+    public function getRibonLenght(): int
+    {
+        $sides = [$this->length, $this->width, $this->height];
+        sort($sides);
+
+        $bow = $this->length * $this->width * $this->height;
+        $ribon = $sides[0] * 2 + $sides[1] * 2;
+
+        return $bow + $ribon;
     }
 }
