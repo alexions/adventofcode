@@ -21,7 +21,7 @@ class Present
 
         $min_side = min($side_a, $side_b, $side_c);
 
-        return 2 * $side_a + 2 * $side_b + 2 * $side_c + $min_side;
+        return 2 * ($side_a + $side_b + $side_c) + $min_side;
     }
 
     public function getRibonLenght(): int
@@ -30,7 +30,7 @@ class Present
         sort($sides);
 
         $bow = $this->length * $this->width * $this->height;
-        $ribon = $sides[0] * 2 + $sides[1] * 2;
+        $ribon = ($sides[0] + $sides[1]) * 2;
 
         return $bow + $ribon;
     }
