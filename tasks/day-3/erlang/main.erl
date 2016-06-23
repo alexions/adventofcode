@@ -5,19 +5,12 @@ start([InputFile]) ->
     {ok, Data} = file:read_file(InputFile),
     {SantaSet, _} = lists:foldl(fun move/2, {sets:from_list([{0, 0}]), {0, 0}}, binary_to_list(Data)),
 
-    {SantaWRobotSet, _, _, _} = lists:foldl(fun(Direction, {Set, Santa, Robot, Switcher}) ->
-            case Switcher of
-                true ->
-                    {NewSet, NewPosition} = move(Direction, {Set, Santa}),
-                    {NewSet, NewPosition, Robot, not Switcher};
-                false ->
-                    {NewSet, NewPosition} = move(Direction, {Set, Robot}),
-                    {NewSet, Santa, NewPosition, not Switcher}
-            end
-        end, {sets:from_list([{0, 0}]), {0, 0}, {0, 0}, true}, binary_to_list(Data)),
+    {SantaMove, RobotMove} = split(binary_to_list(Data)),
+    {SSet, _} = lists:foldl(fun move/2, {sets:from_list([{0, 0}]), {0, 0}}, SantaMove),
+    {RSet, _} = lists:foldl(fun move/2, {sets:from_list([{0, 0}]), {0, 0}}, RobotMove),
 
     io:format("Houses with presents (only Santa): ~w~n", [sets:size(SantaSet)]),
-    io:format("Houses with presents (Santa with robot): ~w~n", [sets:size(SantaWRobotSet)]),
+    io:format("Houses with presents (Santa with robot): ~w~n", [sets:size(sets:union(SSet, RSet))]),
     halt().
 
 move(Direction, {Set, {X, Y}}) ->
@@ -29,3 +22,8 @@ move(Direction, {Set, {X, Y}}) ->
         _ -> {X, Y}
     end,
     {sets:add_element(NewPosition, Set), NewPosition}.
+
+split(L) -> split(L, [], []).
+split([H1,H2|T], L1, L2) -> split(T, [H1|L1], [H2|L2]);
+split([H1], L1, L2) -> split([], [H1|L1], L2);
+split([], L1, L2) -> {lists:reverse(L1), lists:reverse(L2)}.
