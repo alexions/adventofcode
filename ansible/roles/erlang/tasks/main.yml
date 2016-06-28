@@ -9,3 +9,9 @@
   become: yes
   tags:
     - erlang
+
+- name: Install Rebar3
+  get_url: url=https://s3.amazonaws.com/rebar3/rebar3 dest=/usr/local/bin/rebar3 mode=0755
+  become: yes
+  tags:
+    - erlang
